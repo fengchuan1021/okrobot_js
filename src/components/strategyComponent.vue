@@ -46,7 +46,7 @@
 
   <div v-for="(item,index) in strategies" :key="index">
     <div>
-      <span>{{item.instid}}</span>  <span><span>开多</span>{{item.longleverage}}</span>  <span><span>开空</span>{{item.shortleverage}}</span>
+      <span>{{item.instid}}</span>  <span><span>开多</span>{{item.longleverage}}</span>  <span><span>开空</span>{{item.shortleverage}}</span>  <span><el-button @click="editstrategy(item)">编辑</el-button></span><span><el-button @click="deletestrategy(item)">删除</el-button></span>
     </div>
     <div>
       <div>止损策略：</div>
@@ -95,6 +95,16 @@ const submitstrategy=()=>{
       ElMessage.success("添加策略成功")
     }
   })
+}
+const editstrategy=(obj)=>{
+  Object.assign(additem,obj)
+}
+const deletestrategy=(obj)=>{
+request.request({method:'get',url:'/api/delstratogy?instid='+obj.instid}).then(ret=>{
+  if(ret.status==0){
+    delete strategies[obj.instid]
+  }
+})
 }
 const handleSelectinstId=(item)=>{
 
